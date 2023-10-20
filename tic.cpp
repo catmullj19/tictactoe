@@ -18,7 +18,12 @@
     // else if (representation == "O") m_player = O;
     // else m_player = Player::NONE;
 // }
-
+/**
+ * @brief 
+ * 
+ * @param player 
+ * @return std::string 
+ */
 std::string PlayerEnum::toString(PlayerEnum::Player player)
 {
   switch (player)
@@ -33,6 +38,12 @@ std::string PlayerEnum::toString(PlayerEnum::Player player)
   return "-";
 }
 
+/**
+ * @brief 
+ * 
+ * @param player 
+ * @return PlayerEnum::Player 
+ */
 PlayerEnum::Player PlayerEnum::getOtherPlayer(PlayerEnum::Player player)
 {
   switch (player)
@@ -47,40 +58,74 @@ PlayerEnum::Player PlayerEnum::getOtherPlayer(PlayerEnum::Player player)
   return NONE;
 }
 
+/**
+ * @brief 
+ * 
+ * @param player 
+ * @return std::string 
+ */
 std::string pe(PlayerEnum::Player player)
 {
     return PlayerEnum::toString(player);
 }
 
-//*****************************************************************************
-// Field
-
+/**
+ * @brief Construct a new Field:: Field object
+ * 
+ * @param number 
+ * @param owner 
+ */
 Field::Field(int number, PlayerEnum::Player owner)
   : m_number(number)
   , m_owner(owner)
 {
 }
 
+/**
+ * @brief 
+ * 
+ * @return Field 
+ */
 Field Field::copy() const
 {
   return Field(m_number, m_owner);
 }
 
+/**
+ * @brief 
+ * 
+ * @return PlayerEnum::Player 
+ */
 PlayerEnum::Player Field::getOwner() const
 {
   return m_owner;
 }
 
+/**
+ * @brief 
+ * 
+ * @param owner 
+ */
 void Field::setOwner(PlayerEnum::Player owner)
 {
   m_owner = owner;
 }
 
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 int Field::getNumber() const
 {
   return m_number;
 }
 
+/**
+ * @brief 
+ * 
+ * @return std::string 
+ */
 std::string Field::toString() const
 {
   std::ostringstream s;
@@ -88,14 +133,19 @@ std::string Field::toString() const
   return s.str();
 }
 
-//*****************************************************************************
-// Board
-
+/**
+ * @brief Construct a new Board:: Board object
+ * 
+ */
 Board::Board()
 {
   initialize();
 }
 
+/**
+ * @brief 
+ * 
+ */
 void Board::initialize()
 {
   m_playingBoard.clear();
@@ -110,6 +160,12 @@ void Board::initialize()
   }
 }
 
+/**
+ * @brief 
+ * 
+ * @param number 
+ * @param owner 
+ */
 void Board::move(int number, PlayerEnum::Player owner)
 {
   if (m_playingBoard[number].getOwner() != PlayerEnum::NONE)
@@ -136,6 +192,11 @@ Board Board::copy() const
   return board;
 }
 
+/**
+ * @brief 
+ * 
+ * @return std::vector<int> 
+ */
 std::vector<int> Board::validMoves() const
 {
   std::vector<int> validMoves;
@@ -153,6 +214,14 @@ std::vector<int> Board::validMoves() const
   return validMoves;
 }
 
+/**
+ * @brief 
+ * 
+ * @param row 
+ * @param col 
+ * @return true 
+ * @return false 
+ */
 bool Board::isValid(int row, int col) const
 {
   if (col == -999)
@@ -248,6 +317,12 @@ bool Board::isWon(PlayerEnum::Player player) const
   return false;
 }
 
+/**
+ * @brief 
+ * 
+ * @return true 
+ * @return false 
+ */
 bool Board::isDraw() const
 {
   if (validMoves().size() == 0)
@@ -257,6 +332,13 @@ bool Board::isDraw() const
   return false;
 }
 
+/**
+ * @brief 
+ * 
+ * @param verbose 
+ * @return true 
+ * @return false 
+ */
 bool Board::gameEnded(bool verbose) const
 {
   if (isWon(PlayerEnum::O))
@@ -286,6 +368,12 @@ bool Board::gameEnded(bool verbose) const
   return false;
 }
 
+/**
+ * @brief 
+ * 
+ * @param forPlayer 
+ * @return int 
+ */
 int Board::hash(PlayerEnum::Player forPlayer) const
 {
   int result = 0;
@@ -313,6 +401,11 @@ int Board::hash(PlayerEnum::Player forPlayer) const
   return result;
 }
 
+/**
+ * @brief 
+ * 
+ * @return std::string 
+ */
 std::string Board::toString() const
 {
   std::string lines1(COL_DIMENSION * 8, '=');
@@ -341,26 +434,54 @@ std::string Board::toString() const
   return str;
 }
 
+/**
+ * @brief 
+ * 
+ */
 void Board::printToScreen() const
 {
   std::cout << toString();
 }
 
+/**
+ * @brief 
+ * 
+ * @param number 
+ * @return Field 
+ */
 Field Board::getField(int number) const
 {
   return m_playingBoard[number];
 }
 
+/**
+ * @brief 
+ * 
+ * @param number 
+ * @param field 
+ */
 void Board::setField(int number, const Field& field)
 {
   m_playingBoard[number] = field;
 }
 
+/**
+ * @brief 
+ * 
+ * @param x 
+ * @param y 
+ * @return int 
+ */
 int Board::number(int x, int y)
 {
   return ((x - 1) * COL_DIMENSION) + y;
 }
 
+/**
+ * @brief 
+ * 
+ * @return double 
+ */
 double Board::getReward() const
 {
   if (isWon(PlayerEnum::X)) return 1.0;
@@ -369,25 +490,40 @@ double Board::getReward() const
   return 0.0;
 }
 
-//*****************************************************************************
-// PlayerToggle
-
+/**
+ * @brief Construct a new Player Toggle:: Player Toggle object
+ * 
+ */
 PlayerToggle::PlayerToggle()
 {
   m_gammaPlayer = PlayerEnum::X;
   m_opponentPlayer = PlayerEnum::O;
 }
 
+/**
+ * @brief 
+ * 
+ * @return PlayerEnum::Player 
+ */
 PlayerEnum::Player PlayerToggle::getGammaPlayer() const
 {
   return m_gammaPlayer;
 }
 
+/**
+ * @brief 
+ * 
+ * @return PlayerEnum::Player 
+ */
 PlayerEnum::Player PlayerToggle::getOpponentPlayer() const
 {
   return m_opponentPlayer;
 }
 
+/**
+ * @brief 
+ * 
+ */
 void PlayerToggle::toggle()
 {
   if (m_gammaPlayer == PlayerEnum::X)
@@ -402,9 +538,14 @@ void PlayerToggle::toggle()
   }
 }
 
-//*****************************************************************************
-// random_element
-
+/**
+ * @brief 
+ * 
+ * @tparam I 
+ * @param begin 
+ * @param end 
+ * @return I 
+ */
 template <typename I>
 I random_element(I begin, I end)
 {
@@ -418,9 +559,10 @@ I random_element(I begin, I end)
   return begin;
 }
 
-//*****************************************************************************
-// Engine
-
+/**
+ * @brief 
+ * 
+ */
 void Engine::resetBetweenGames()
 {
   if (verbose())
@@ -429,18 +571,28 @@ void Engine::resetBetweenGames()
   }
 }
 
-//*****************************************************************************
-// RandomEngine
-
+/**
+ * @brief 
+ * 
+ * @param board 
+ * @param forPlayer 
+ * @param trainingEnabled 
+ * @return int 
+ */
 int RandomEngine::makeMove(const Board& board, PlayerEnum::Player forPlayer, bool trainingEnabled)
 {
   std::vector<int> validMoves = board.validMoves();
   return *random_element(validMoves.begin(), validMoves.end());
 }
 
-//*****************************************************************************
-// MinMaxEngine - Use minmax search
-
+/**
+ * @brief 
+ * 
+ * @param board 
+ * @param forPlayer 
+ * @param trainingEnabled 
+ * @return int 
+ */
 int MinMaxEngine::makeMove(const Board& board, PlayerEnum::Player forPlayer, bool trainingEnabled)
 {
   m_player = forPlayer;
@@ -456,6 +608,15 @@ int MinMaxEngine::makeMove(const Board& board, PlayerEnum::Player forPlayer, boo
   }
 }
 
+/**
+ * @brief 
+ * 
+ * @param player 
+ * @param board 
+ * @param alpha 
+ * @param beta 
+ * @return std::pair<int, int> 
+ */
 std::pair<int, int> MinMaxEngine::alpha_beta(PlayerEnum::Player player, const Board& board, int alpha, int beta)
 {
   int move = 0;
@@ -528,9 +689,10 @@ std::pair<int, int> MinMaxEngine::alpha_beta(PlayerEnum::Player player, const Bo
   }
 }
 
-//*****************************************************************************
-// RLEngine - reinforcement learning engine
-
+/**
+ * @brief 
+ * 
+ */
 QMatrix RLEngine::m_QMatrix;
 
 RLEngine::RLEngine(double epsilon)
@@ -538,6 +700,11 @@ RLEngine::RLEngine(double epsilon)
   initialize(epsilon);
 }
 
+/**
+ * @brief 
+ * 
+ * @param epsilon 
+ */
 void RLEngine::initialize(double epsilon)
 {
   m_epsilon = epsilon;
@@ -546,16 +713,35 @@ void RLEngine::initialize(double epsilon)
   m_verbose = false;
 }
 
+/**
+ * @brief 
+ * 
+ * @return true 
+ * @return false 
+ */
 bool RLEngine::verbose() const
 {
   return m_verbose;
 }
 
+/**
+ * @brief 
+ * 
+ * @param v 
+ */
 void RLEngine::verbose(bool v)
 {
   m_verbose = v;
 }
 
+/**
+ * @brief 
+ * 
+ * @param board 
+ * @param forPlayer 
+ * @param trainingEnabled 
+ * @return int 
+ */
 int RLEngine::makeMove(const Board& board, PlayerEnum::Player forPlayer, bool trainingEnabled)
 {
   int move(0);
@@ -623,6 +809,13 @@ int RLEngine::makeMove(const Board& board, PlayerEnum::Player forPlayer, bool tr
   return move;
 }
 
+/**
+ * @brief 
+ * 
+ * @param board 
+ * @param move 
+ * @param forPlayer 
+ */
 void RLEngine::q_learn(const Board& board, int move, PlayerEnum::Player forPlayer) const
 {
   if (m_verbose)
@@ -688,6 +881,12 @@ void RLEngine::q_learn(const Board& board, int move, PlayerEnum::Player forPlaye
   m_QMatrix[state_key][move] += change;
 }
 
+/**
+ * @brief 
+ * 
+ * @param Qe 
+ * @return int 
+ */
 int RLEngine::stochastic_argmax(const QEntry& Qe)
 {
   int move(0);
@@ -727,6 +926,12 @@ int RLEngine::stochastic_argmax(const QEntry& Qe)
   return move;
 }
 
+/**
+ * @brief 
+ * 
+ * @param Qe 
+ * @return int 
+ */
 int RLEngine::stochastic_argmin(const QEntry& Qe)
 {
   int move(0);
@@ -766,7 +971,14 @@ int RLEngine::stochastic_argmin(const QEntry& Qe)
   return move;
 }
 
-// create and maybe add key
+/**
+ * @brief create and maybe add key
+ * 
+ * @param board 
+ * @param forPlayer 
+ * @param verbose 
+ * @return int 
+ */
 int RLEngine::camak(const Board& board, PlayerEnum::Player forPlayer, bool verbose)
 {
   double default_Qvalue = 1.0;
@@ -804,13 +1016,21 @@ int RLEngine::camak(const Board& board, PlayerEnum::Player forPlayer, bool verbo
   return state_key;
 }
 
-//*****************************************************************************
-// TimeSeries
-
+/**
+ * @brief Construct a new Time Series:: Time Series object
+ * 
+ */
 TimeSeries::TimeSeries()
 {
 }
 
+/**
+ * @brief 
+ * 
+ * @param numPlayer1Wins 
+ * @param numPlayer2Wins 
+ * @param numDraws 
+ */
 void TimeSeries::add(int numPlayer1Wins, int numPlayer2Wins, int numDraws)
 {
   m_player1Wins.push_back(numPlayer1Wins);
@@ -818,6 +1038,11 @@ void TimeSeries::add(int numPlayer1Wins, int numPlayer2Wins, int numDraws)
   m_draws.push_back(numDraws);
 }
 
+/**
+ * @brief 
+ * 
+ * @param filename 
+ */
 void TimeSeries::write(const std::string& filename) const
 {
   std::ofstream ofs(filename, std::ofstream::out);
@@ -855,9 +1080,16 @@ void TimeSeries::write(const std::string& filename) const
   ofs << std::endl;
 }
 
-//*****************************************************************************
-// AutoPlay
-
+/**
+ * @brief 
+ * 
+ * @param engine 
+ * @param opponent 
+ * @param enginePlayer 
+ * @param opponentPlayer 
+ * @param trainingEnabled 
+ * @return GameResultEnum::Result 
+ */
 GameResultEnum::Result AutoPlay::play(Engine& engine, Engine& opponent, PlayerEnum::Player enginePlayer, PlayerEnum::Player opponentPlayer, bool trainingEnabled)
 {
   engine.resetBetweenGames();
@@ -908,15 +1140,21 @@ GameResultEnum::Result AutoPlay::play(Engine& engine, Engine& opponent, PlayerEn
   return gameResult;
 }
 
-//*****************************************************************************
-// Training
-
+/**
+ * @brief Construct a new Training:: Training object
+ * 
+ */
 Training::Training()
   : m_autoplay()
   , m_runs(10000)
 {
 }
 
+/**
+ * @brief 
+ * 
+ * @param engine 
+ */
 void Training::train(Engine& engine)
 {
   RLEngine opponentEngine(0.9);
@@ -932,9 +1170,10 @@ void Training::train(Engine& engine)
   }
 }
 
-//*****************************************************************************
-// HumanPlay
-
+/**
+ * @brief 
+ * 
+ */
 void HumanPlay::play()
 {
   std::shared_ptr<Engine> gammaEngine;
@@ -948,7 +1187,7 @@ void HumanPlay::play()
   while (inputToken != 0)
   {
     board.printToScreen();
-    std::cout << "Your move: ";
+    std::cout << "Your move (0 to exit): ";
     std::cin >> inputToken;
 
     if (inputToken == 0) break;
@@ -982,6 +1221,15 @@ void HumanPlay::play()
   }
 }
 
+/**
+ * @brief 
+ * 
+ * @param board 
+ * @param owner 
+ * @param message 
+ * @return true 
+ * @return false 
+ */
 bool HumanPlay::checkWon(Board& board, PlayerEnum::Player owner, const std::string& message) const
 {
   if (board.isWon(owner))
@@ -994,6 +1242,13 @@ bool HumanPlay::checkWon(Board& board, PlayerEnum::Player owner, const std::stri
   return false;
 }
 
+/**
+ * @brief 
+ * 
+ * @param board 
+ * @return true 
+ * @return false 
+ */
 bool HumanPlay::checkDraw(Board& board) const
 {
   if (board.validMoves().size() == 0)
@@ -1006,9 +1261,10 @@ bool HumanPlay::checkDraw(Board& board) const
   return false;
 }
 
-//*****************************************************************************
-// SelfPlay
-
+/**
+ * @brief Construct a new Self Play:: Self Play object
+ * 
+ */
 SelfPlay::SelfPlay()
   : m_gammaEngine(std::make_shared<RLEngine>(0.9))
   //, m_opponentEngine(std::make_shared<RLEngine>())
@@ -1018,6 +1274,10 @@ SelfPlay::SelfPlay()
 {
 }
 
+/**
+ * @brief 
+ * 
+ */
 void SelfPlay::play()
 {
   TimeSeries overallSeries;
@@ -1030,9 +1290,6 @@ void SelfPlay::play()
     TimeSeries timeSeries;
 
     PlayerToggle playerToggle;
-
-    //m_gammaEngine->verbose(true);
-    //m_opponentEngine->verbose(true);
 
     for (int i = 0; i < m_selfPlayGames; i++)
     {
@@ -1059,10 +1316,13 @@ void SelfPlay::play()
   overallSeries.write("series/overall-series.csv");
 }
 
-
-//*****************************************************************************
-// main
-
+/**
+ * @brief 
+ * 
+ * @param argc 
+ * @param argv 
+ * @return int 
+ */
 int main(int argc, char** argv)
 {
   SelfPlay selfPlay;

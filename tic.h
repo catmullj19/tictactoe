@@ -3,30 +3,27 @@
 #include <map>
 #include <memory>
 
-//*****************************************************************************
-// PlayerEnum
-
+/**
+ * @brief 
+ * 
+ */
 class PlayerEnum
 {
 public:
     enum Player { NONE, O, X };
-    // PlayerEnum(const std::string& representation);
 
     static std::string toString(Player player);
 
     static PlayerEnum::Player getOtherPlayer(Player player);
 
-    //static const std::string NONE = "_";
-    //static const std::string O = "O";
-    //static const std::string X = "X";
-
 private:
     Player m_player;
 };
 
-//*****************************************************************************
-// Field
-
+/**
+ * @brief 
+ * 
+ */
 class Field
 {
 public:
@@ -48,9 +45,10 @@ private:
     PlayerEnum::Player m_owner;
 };
 
-//*****************************************************************************
-// Board
-
+/**
+ * @brief 
+ * 
+ */
 class Board
 {
 public:
@@ -93,9 +91,10 @@ private:
     std::vector<Field> m_playingBoard;
 };
 
-//*****************************************************************************
-// PlayerToggle
-
+/**
+ * @brief 
+ * 
+ */
 class PlayerToggle
 {
 public:
@@ -114,9 +113,10 @@ private:
     PlayerEnum::Player m_opponentPlayer;
 };
 
-//*****************************************************************************
-// Engine
-
+/**
+ * @brief 
+ * 
+ */
 class Engine
 {
 public:
@@ -132,18 +132,20 @@ public:
     virtual void verbose(bool verbose) { }
 };
 
-//*****************************************************************************
-// RandomEngine
-
+/**
+ * @brief 
+ * 
+ */
 class RandomEngine : public Engine
 {
 public:
     int makeMove(const Board& board, PlayerEnum::Player forPlayer, bool trainingEnabled);
 };
 
-//*****************************************************************************
-// MinMaxEngine
-
+/**
+ * @brief 
+ * 
+ */
 class MinMaxEngine : public Engine
 {
 public:
@@ -155,12 +157,17 @@ private:
     PlayerEnum::Player m_player;
 };
 
-//*****************************************************************************
-// RLEngine
-
+/**
+ * @brief 
+ * 
+ */
 typedef std::map<int, std::map<int, double>> QMatrix;
 typedef std::map<int, double> QEntry;
 
+/**
+ * @brief 
+ * 
+ */
 class RLEngine : public Engine
 {
 public:
@@ -195,9 +202,10 @@ private:
     static QMatrix m_QMatrix;
 };
 
-//*****************************************************************************
-// TimeSeries
-
+/**
+ * @brief 
+ * 
+ */
 class TimeSeries
 {
 public:
@@ -214,18 +222,20 @@ private:
     std::vector<int> m_draws;
 };
 
-//*****************************************************************************
-// GameResultEnum
-
+/**
+ * @brief 
+ * 
+ */
 class GameResultEnum
 {
 public:
     enum Result { NO_RESULT = 0, ENGINE_WON = 1, OPPONENT_WON = 2, DRAW = 3 };
 };
 
-//*****************************************************************************
-// AutoPlay
-
+/**
+ * @brief 
+ * 
+ */
 class AutoPlay
 {
 public:
@@ -235,9 +245,10 @@ public:
     GameResultEnum::Result play(Engine& engine, Engine& opponent, PlayerEnum::Player enginePlayer, PlayerEnum::Player opponentPlayer, bool trainingEnabled);
 };
 
-//*****************************************************************************
-// Training
-
+/**
+ * @brief 
+ * 
+ */
 class Training
 {
 public:
@@ -252,9 +263,10 @@ private:
 
 };
 
-//*****************************************************************************
-// HumanPlay
-
+/**
+ * @brief 
+ * 
+ */
 class HumanPlay
 {
 public:
@@ -267,9 +279,10 @@ public:
     bool checkDraw(Board& board) const;
 };
 
-//*****************************************************************************
-// SelfPlay
-
+/**
+ * @brief 
+ * 
+ */
 class SelfPlay
 {
 public:
