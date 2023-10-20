@@ -1,7 +1,9 @@
 cmake_minimum_required (VERSION 3.5)
 
-project( Tic )
+project( tic )
 
-add_definitions(-std=c++11)
+add_executable( ${PROJECT_NAME} tic.cpp )
 
-add_executable( tic tic.cpp )
+set_target_properties(${PROJECT_NAME} PROPERTIES
+            CXX_STANDARD 17
+            CXX_EXTENSIONS OFF )

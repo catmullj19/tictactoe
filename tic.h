@@ -54,6 +54,7 @@ class Board
 public:
     static const int ROW_DIMENSION = 3;
     static const int COL_DIMENSION = 3;
+    static const int INVALID_COLUMN = -999;
 
     Board();
 
@@ -65,7 +66,7 @@ public:
 
     std::vector<int> validMoves() const;
 
-    bool isValid(int row, int col = -999) const;
+    bool isValid(int row, int col = INVALID_COLUMN) const;
 
     bool isWon(PlayerEnum::Player player) const;
 
